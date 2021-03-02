@@ -23,7 +23,7 @@ createContractInstance('PersonRecord').then(instace => {
 const addPerson = async (citizenId,firstName,lastName,age,gender,owner) => {
     const pid = Date.now();
     const date = pid.toString;
-    const slip = await PersonRecord.addPerson(pid,citizenId,firstName,lastName,age,gender,date, {from: owner,gas:1000000});
+    const slip = await PersonRecord.addPerson(pid,citizenId,firstName,lastName,age,gender,date, {from: owner,gas:0});
     return {slip: slip , pid:pid};
 };
 

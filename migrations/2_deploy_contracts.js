@@ -1,12 +1,12 @@
 const Token = artifacts.require('Token');
-const Shop = artifacts.require('PersonRecord');
+const PersonRecord = artifacts.require('PersonRecord');
 
 module.exports = function(deployer, networks, accounts) {
   deployer
     .deploy(Token, 10000000)
     .then(async () => {
       const tokenContract = await Token.deployed();
-      return deployer.deploy(Shop, tokenContract.address);
+      return deployer.deploy(PersonRecord, tokenContract.address);
     })
     .then(async () => {
       const token = await Token.deployed();

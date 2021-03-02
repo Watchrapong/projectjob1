@@ -6,8 +6,8 @@ const {
     getAccounts,
     unlockAccount
 }=require('./blockchain');
-const { json } = require('body-parser');
-const { body } = require('min-document');
+// const { json } = require('body-parser');
+// const { body } = require('min-document');
 
 
 const app = express();
@@ -32,19 +32,16 @@ app.post('/person/add',async (request, response) => {
         error: 'Please type correct account password.',
       });
     }
-
     const dataResult = await addPerson(citizenIdInput,firstNameInput,lastNameInput,ageInput,genderInput,ownerInput);
-
     return response.json({
       success: true,
-      data: { citizenId: dataResult.citizenId, transactionSlip: dataResult.slip}, 
+      data: { pid: dataResult.pid, transactionSlip: dataResult.slip}, 
       error: null,
     });
     }catch (error) {
         return response.json({
           success: false,
           error: error.message,
-          
         });
       }
   });
