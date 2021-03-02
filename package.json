@@ -1,0 +1,27 @@
+{
+  "name": "projectjob1",
+  "description": "Test blockchain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Watchrapong/projectjob1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Watchrapong/projectjob1/issues"
+  },
+  "homepage": "https://github.com/Watchrapong/projectjob1#readme",
+  "dependencies": {
+    "@truffle/contract": "^4.3.9",
+    "express": "^4.17.1",
+    "web3": "^1.3.4"
+  }
+}
