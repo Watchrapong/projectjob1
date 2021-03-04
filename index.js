@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+const Multer = require('multer');
 const express = require('express');
 const bodyParser = require('body-parser');
 const {
@@ -9,6 +12,8 @@ const {
 // const { json } = require('body-parser');
 // const { body } = require('min-document');
 
+const upload = Multer({ dest: 'public/images/', limits: { files: 1 } });
+const MAX_IMAGE_SIZE_BYTES = 10485760;
 
 const app = express();
 const appPort = 3000;
@@ -21,15 +26,76 @@ app.get('/', (request, response, next) => {
 });
 
 
-app.post('/person/add',async (request, response) => {
+app.post('/person/add', upload.single('personImageInput'),async (request, response) => {
     try {
     const {citizenIdInput,firstNameInput,lastNameInput,ageInput,genderInput,ownerInput,accountPassword} = request.body;
-    if (!citizenIdInput || !firstNameInput || !lastNameInput || !ageInput || !genderInput || !ownerInput || !accountPassword) {
+    const { file } = request;
+    if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.mimetype)) {
+      fs.unlinkSync(file.path);
       return response.json({
         success: false,
-        error: 'Please fill the form.',
+        error: 'Please upload a file as jpeg, png, or gif.',
       });
     }
+
+    if (file.size > MAX_IMAGE_SIZE_BYTES) {
+      fs.unlinkSync(file.path);
+      return response.json({
+        success: false,
+        error: 'Please upload smaller file. (10MB)',
+      });
+    }
+    if (!citizenIdInput) {
+      return response.json({
+        success: false,
+        error: 'citizenIdInput',
+      });
+    }
+
+    if (!firstNameInput) {
+      return response.json({
+        success: false,
+        error: 'firstNameInput',
+      });
+    }
+
+    if (!lastNameInput) {
+      return response.json({
+        success: false,
+        error: 'lastNameInput',
+      });
+    }
+
+    if (!ageInput) {
+      return response.json({
+        success: false,
+        error: 'ageInput',
+      });
+    }
+
+    if (!genderInput) {
+      return response.json({
+        success: false,
+        error: 'genderInput',
+      });
+    }
+
+    if (!ownerInput) {
+      return response.json({
+        success: false,
+        error: 'ownerInput',
+      });
+    }
+
+    if (!accountPassword) {
+      return response.json({
+        success: false,
+        error: 'accountPassword',
+      });
+    }
+
+    const personImagePath = 'images/' + file.filename;
+
     const unlocked = await unlockAccount(ownerInput, accountPassword);
     if (!unlocked) {
       return response.json({
@@ -38,7 +104,6 @@ app.post('/person/add',async (request, response) => {
       });
     }
     const dataResult = await addPerson(citizenIdInput,firstNameInput,lastNameInput,ageInput,genderInput,ownerInput);
-    onsole.log(dataResult);
     return response.json({
       success: true,
       data: { pid: dataResult.pid, transactionSlip: dataResult.slip}, 
@@ -51,6 +116,7 @@ app.post('/person/add',async (request, response) => {
         });
       }
   });
+  //เงื่อนไขที่เลขบัตรประชาชนซ้ำ
 
   app.post('/person/:pid', async (request, response) => {
     try {
