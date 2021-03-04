@@ -20,11 +20,16 @@ app.get('/', (request, response, next) => {
    response.send('Hello! Welcome to Application!');
 });
 
-app.listen(appPort, () => console.log(`Server is running! it is listening on port ${appPort}...`));
 
 app.post('/person/add',async (request, response) => {
     try {
     const {citizenIdInput,firstNameInput,lastNameInput,ageInput,genderInput,ownerInput,accountPassword} = request.body;
+    if (!citizenIdInput || !firstNameInput || !lastNameInput || !ageInput || !genderInput || !ownerInput || !accountPassword) {
+      return response.json({
+        success: false,
+        error: 'Please fill the form.',
+      });
+    }
     const unlocked = await unlockAccount(ownerInput, accountPassword);
     if (!unlocked) {
       return response.json({
@@ -33,6 +38,7 @@ app.post('/person/add',async (request, response) => {
       });
     }
     const dataResult = await addPerson(citizenIdInput,firstNameInput,lastNameInput,ageInput,genderInput,ownerInput);
+    onsole.log(dataResult);
     return response.json({
       success: true,
       data: { pid: dataResult.pid, transactionSlip: dataResult.slip}, 
@@ -64,3 +70,4 @@ app.post('/person/add',async (request, response) => {
     }
   });
 
+  app.listen(appPort, () => console.log(`Server is running! it is listening on port ${appPort}...`));

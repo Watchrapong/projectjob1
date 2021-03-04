@@ -25,8 +25,8 @@ contract PersonRecord {
 
     
 
-    function addPerson(uint256 _personid, string memory _citizenId, string memory _firstName, string memory _lastName, uint _age, string memory _gender, uint256 _dateGetVaccine ) public {
-        persons[_personid] = Person({
+    function addPerson(uint256 _pid, string memory _citizenId, string memory _firstName, string memory _lastName, uint _age, string memory _gender, uint256 _dateGetVaccine ) public {
+        persons[_pid] = Person({
             citizenId: _citizenId,
             firstName: _firstName,
             lastName: _lastName,
@@ -35,7 +35,7 @@ contract PersonRecord {
             dateGetVaccine: _dateGetVaccine,
             owner: msg.sender
         });
-        emit AddedPerson(_personid, _citizenId, _firstName, _lastName, _age, _gender, _dateGetVaccine,msg.sender);
+        emit AddedPerson(_pid, _citizenId, _firstName, _lastName, _age, _gender, _dateGetVaccine,msg.sender);
     }
 
     // function getvaccine (string memory _citizenid, uint256 _dateGetVaccine) public{
