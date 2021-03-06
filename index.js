@@ -45,52 +45,10 @@ app.post('/person/add', upload.single('personImageInput'),async (request, respon
         error: 'Please upload smaller file. (10MB)',
       });
     }
-    if (!citizenIdInput) {
+    if (!citizenIdInput||!firstNameInput||!lastNameInput||!ageInput||!genderInput||!ownerInput||!accountPassword) {
       return response.json({
         success: false,
-        error: 'citizenIdInput',
-      });
-    }
-
-    if (!firstNameInput) {
-      return response.json({
-        success: false,
-        error: 'firstNameInput',
-      });
-    }
-
-    if (!lastNameInput) {
-      return response.json({
-        success: false,
-        error: 'lastNameInput',
-      });
-    }
-
-    if (!ageInput) {
-      return response.json({
-        success: false,
-        error: 'ageInput',
-      });
-    }
-
-    if (!genderInput) {
-      return response.json({
-        success: false,
-        error: 'genderInput',
-      });
-    }
-
-    if (!ownerInput) {
-      return response.json({
-        success: false,
-        error: 'ownerInput',
-      });
-    }
-
-    if (!accountPassword) {
-      return response.json({
-        success: false,
-        error: 'accountPassword',
+        error: 'Please fill the form.',
       });
     }
 

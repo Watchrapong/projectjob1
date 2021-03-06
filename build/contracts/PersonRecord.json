@@ -4092,6 +4092,60 @@
     "version": "0.5.1+commit.c8a2cb62.Emscripten.clang"
   },
   "networks": {
+    "42": {
+      "events": {
+        "0x9095baa0ca3bbe2a218aef4cbc88e1eb1be2c1874d316acd7d8af7dedbc478c7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "personid",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "citizenId",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "firstName",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "lastName",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "age",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "gender",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "dateGetVaccine",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "owner",
+              "type": "address"
+            }
+          ],
+          "name": "AddedPerson",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x2741E52DFA9fb5A4c8f5C222413F5B4Dbdd085be",
+      "transactionHash": "0x056013ef945dcf3e8c41e99cf24a3294aeef0d121a38d12ae29a57b017399a1b"
+    },
     "5777": {
       "events": {
         "0x7fd204ad8f4fd1556b26d15383a064049e4be7a6e86d07107164cbce6c4da18a": {
@@ -4192,12 +4246,12 @@
         }
       },
       "links": {},
-      "address": "0xA7b2A4829700A491aA54EAa58c66F5B732B92D3a",
-      "transactionHash": "0x77f0dca5ef9d4a999be0650be1e92118000ec8f209eed7e249330d61654412e1"
+      "address": "0x8f0591B72e4164f3409cD882033E03685FF1e9A8",
+      "transactionHash": "0x3c90724e7838c6be6e5ec4b792180a457e10ed2e89013c07b12e8dfccf8207a5"
     }
   },
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-03-04T15:26:02.633Z",
+  "updatedAt": "2021-03-05T06:55:44.758Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
