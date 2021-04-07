@@ -28,43 +28,27 @@ app.get('/', (request, response, next) => {
 
 app.post('/person/add', upload.single('personImageInput'),async (request, response) => {
     try {
-    const {citizenIdInput,firstNameInput,lastNameInput,ageInput,genderInput,ownerInput,accountPassword} = request.body;
-    const { file } = request;
-    if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.mimetype)) {
-      fs.unlinkSync(file.path);
-      return response.json({
-        success: false,
-        error: 'Please upload a file as jpeg, png, or gif.',
-      });
-    }
+    const {citizenIdInput,firstNameInput,lastNameInput,ageInput,genderInput} = request.body;
 
-    if (file.size > MAX_IMAGE_SIZE_BYTES) {
-      fs.unlinkSync(file.path);
-      return response.json({
-        success: false,
-        error: 'Please upload smaller file. (10MB)',
-      });
-    }
-    if (!citizenIdInput||!firstNameInput||!lastNameInput||!ageInput||!genderInput||!ownerInput||!accountPassword) {
+    if (!citizenIdInput||!firstNameInput||!lastNameInput||!ageInput||!genderInput) {
       return response.json({
         success: false,
         error: 'Please fill the form.',
       });
     }
 
-    const personImagePath = 'images/' + file.filename;
+    // const unlocked = await unlockAccount(ownerInput, accountPassword);
+    // if (!unlocked) {
+    //   return response.json({
+    //     success: false,
+    //     error: 'Please type correct account password.',
+    //   });
+    // }
 
-    const unlocked = await unlockAccount(ownerInput, accountPassword);
-    if (!unlocked) {
-      return response.json({
-        success: false,
-        error: 'Please type correct account password.',
-      });
-    }
-    const dataResult = await addPerson(citizenIdInput,firstNameInput,lastNameInput,ageInput,genderInput,ownerInput);
+    const dataResult = await addPerson(citizenIdInput,firstNameInput,lastNameInput,ageInput,genderInput);
     return response.json({
       success: true,
-      data: { pid: dataResult.pid, transactionSlip: dataResult.slip}, 
+      data: { citizenId: dataResult.citizenId, transactionSlip: dataResult.slip}, 
       error: null,
     });
     }catch (error) {
@@ -76,10 +60,10 @@ app.post('/person/add', upload.single('personImageInput'),async (request, respon
   });
   //เงื่อนไขที่เลขบัตรประชาชนซ้ำ
 
-  app.post('/person/:pid', async (request, response) => {
+  app.post('/person/:citizenId', async (request, response) => {
     try {
-       const { pid } = request.params;
-        const result = await getPerson(pid);
+       const { citizenId } = request.params;
+        const result = await getPerson(citizenId);
         return response.json({
            success: true,
            data: result,

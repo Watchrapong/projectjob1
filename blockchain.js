@@ -13,31 +13,34 @@ const createContractInstance = async artifactName => {
   return contract.deployed();
 };
 
+const getAccounts = () => web3.eth.getAccounts();
+
+
 let personRecord;
 createContractInstance('PersonRecord').then(instace => {
     personRecord = instace;
 });
 
-const addPerson = async (citizenId,firstName,lastName,age,gender,owner) => {
+const addPerson = async (citizenId,firstName,lastName,age,gender) => {
     const date = Date.now();
-    const pid = date;
-    const slip = await personRecord.addPerson(pid,citizenId,firstName,lastName,age,gender,date, {from: owner,gas:1000000});
-    return {slip: slip , pid:pid};
+    const slip = await personRecord.addPerson.call(citizenId,firstName,lastName,age,gender,date ,{from:getAccounts[0]});
+    return {slip: slip , citizenId:citizenId};
 };
 
-const getPerson = async pid => {
-    const person  = await personRecord.getPerson.call(pid);
-    person.personid = pid;
+const getPerson = async citizenId => {
+    const person  = await personRecord.getPerson.call(citizenId);
+    person.citizenId = citizenId;
     return person;
 }
 
-const getAccounts = () => web3.eth.getAccounts();
 
-const unlockAccount = (address, password) => web3.eth.personal.unlockAccount(address, password);
+// const unlockAccount = (address, password) => web3.eth.personal.unlockAccount(address, password);
 
 module.exports = {
     addPerson,
     getPerson,
     getAccounts,
-    unlockAccount
+    
+   // unlockAccount
 }
+
